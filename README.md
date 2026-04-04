@@ -196,3 +196,58 @@ migrate-legal-ai-agent-core/
 
 이 저장소는  
 **윤소평 변호사 법률 콘텐츠를 “한 편씩 쓰는 방식”에서 “시스템으로 운영하는 방식”으로 바꾸기 위한 코어 저장소**입니다.
+
+## 브랜치 운영 규칙
+
+이 저장소는 `main` 브랜치를 최종본 보관용으로 사용합니다.  
+초안, 수정, 실험 작업은 반드시 별도 브랜치에서 진행합니다.
+
+### 기본 원칙
+- `main`은 최종 승인된 문서만 반영합니다.
+- 직접 `main`에서 작업하지 않습니다.
+- 모든 수정은 작업 브랜치에서 진행한 뒤 Pull Request로 병합합니다.
+- 작업이 끝난 브랜치는 병합 후 삭제합니다.
+
+### 브랜치 이름 규칙
+- `draft/blog-*` : 네이버 블로그 원고 작업
+- `draft/youtube-*` : 유튜브 대본 작업
+- `draft/prompt-*` : 프롬프트 수정
+- `draft/source-*` : 소스 자료 정리
+- `hotfix/*` : 긴급 수정
+
+### 예시
+- `draft/blog-corporate-bankruptcy-overview`
+- `draft/blog-personal-rehabilitation-eligibility`
+- `draft/youtube-rehabilitation-vs-bankruptcy`
+- `draft/prompt-blog-main-v2`
+- `draft/source-seoul-court-guidelines-update`
+- `hotfix/readme-links-fix`
+
+### 작업 흐름
+1. `main`에서 새 브랜치를 만듭니다.
+2. 해당 브랜치에서 파일을 수정합니다.
+3. Pull Request를 생성합니다.
+4. 제목과 변경 내용을 정리합니다.
+5. 검토 후 `main`에 병합합니다.
+6. 병합이 끝난 작업 브랜치는 삭제합니다.
+
+### Pull Request 제목 규칙
+PR 제목은 아래 형식을 권장합니다.
+
+`[분류] 작업내용`
+
+예시:
+- `[블로그] 법인파산 개요 글 초안 추가`
+- `[유튜브] 회생과 파산 비교 대본 수정`
+- `[프롬프트] 네이버 블로그 메인 프롬프트 v2 반영`
+- `[소스] 서울회생법원 실무준칙 요약 업데이트`
+- `[핫픽스] README 링크 오류 수정`
+
+### 운영 기준
+이 저장소의 브랜치 운영 목적은  
+원본을 안전하게 유지하면서,  
+법률 콘텐츠·프롬프트·소스 문서를 주제별로 분리하여 관리하기 위한 것입니다.
+
+한 줄로 정리하면,  
+`main`은 최종본 보관소이고,  
+작업 브랜치는 초안과 수정 작업을 위한 작업실입니다.

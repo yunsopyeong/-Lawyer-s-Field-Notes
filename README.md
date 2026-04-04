@@ -251,3 +251,22 @@ PR 제목은 아래 형식을 권장합니다.
 한 줄로 정리하면,  
 `main`은 최종본 보관소이고,  
 작업 브랜치는 초안과 수정 작업을 위한 작업실입니다.
+
+
+## 결론
+
+바로 실행하실 때는 이렇게 넣으시면 됩니다.
+
+- `.github/ISSUE_TEMPLATE/config.yml`
+- `.github/ISSUE_TEMPLATE/blog-content-request.md`
+- `.github/ISSUE_TEMPLATE/youtube-script-request.md`
+- `.github/ISSUE_TEMPLATE/source-update.md`
+- `.github/ISSUE_TEMPLATE/hotfix.md`
+- `README.md`
+
+즉,  
+**이슈 템플릿은 작업 요청용**,  
+**README는 저장소 운영 기준용**이라고 보시면 됩니다.
+
+원하시면 다음 단계로 바로  
+**이 6개 파일을 GitHub 업로드용 개별 `.md` 파일 본문 세트**로 다시 더 깔끔하게 분리해서 정리해드리겠습니다.

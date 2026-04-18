@@ -1,5 +1,9 @@
-# AGENTS.md
-- 정보 수집 → 분석 → 결론 구조 유지
-- 법령/판례 우선
-- 과장 표현 금지
-- main 직접 수정 금지
+import OpenAI from "openai";
+
+export function getOpenAIClient() {
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENAI_API_KEY가 설정되지 않았습니다.");
+  }
+  return new OpenAI({ apiKey });
+}

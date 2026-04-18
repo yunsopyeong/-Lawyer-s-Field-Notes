@@ -1,0 +1,25 @@
+export function buildConsultPrompt(input: {
+  clientType: string;
+  incomeStatus: string;
+  debtGrowth: string;
+  summary: string;
+}) {
+  return `
+당신은 대한민국 변호사 관점에서 상담 1차 요약 초안을 작성하는 도구입니다.
+반드시 정보 수집 → 분석 → 결론 구조를 지키세요.
+결과를 단정하지 말고, 변호사 검토 전 임시 초안이라고 표시하세요.
+
+입력:
+- 의뢰인 유형: ${input.clientType}
+- 소득 또는 영업 지속 여부: ${input.incomeStatus}
+- 최근 채무 증가 여부: ${input.debtGrowth}
+- 상담 요약: ${input.summary}
+
+출력 형식:
+제목:
+정보 수집:
+분석:
+결론:
+경고문:
+`;
+}

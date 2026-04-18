@@ -1,5 +1,2 @@
-## 작업 목적
-## 변경 내용
-## 체크리스트
-- [ ] 구조 유지
-- [ ] 과장 표현 없음
+# Codex 자동 push 구조
+ChatGPT → Codex → GitHub → 자동 merge

@@ -335,7 +335,7 @@
 4. GitHub에서 저장소 접근 범위 다시 선택
 5. 그래도 안 되면 ZIP 업로드 방식으로 우회
 
----
+---- [GitHub 자동저장 운영 매뉴얼](./06_operations/workflow/github-auto-save-manual.md)
 
 ## 12. 최종 원칙
 

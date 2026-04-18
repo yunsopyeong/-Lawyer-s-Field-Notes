@@ -1,0 +1,13 @@
+name: Auto Merge
+on:
+  pull_request:
+    types: [labeled]
+permissions:
+  contents: write
+  pull-requests: write
+jobs:
+  automerge:
+    if: contains(github.event.pull_request.labels.*.name, 'automerge')
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "자동 merge 조건 충족"

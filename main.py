@@ -1,43 +1,47 @@
-import os
-from utils.generator import generate_content
+from __future__ import annotations
+
+from datetime import datetime
+from pathlib import Path
+
+from excel_autofill import autofill_financials
+from excel_template_analyzer import analyze_template
+from financial_parser import parse_financial_statements, write_records_json_csv
+from pdf_classifier import classify_document
+from pdf_reader import collect_pdf_files, extract_text_from_pdf
+from validation import validate_excel_errors
 
 
-def read_input() -> str:
-    """읽기 입력 파일을 읽어 사용자 입력을 반환합니다."""
-    input_path = os.path.join("data", "input.txt")
-    with open(input_path, "r", encoding="utf-8") as f:
-        return f.read().strip()
+def run() -> None:
+    base = Path.cwd()
+    input_pdf_dir = base / "INPUT" / "PDF"
+    template_path = base / "INPUT" / "template.xlsx"
 
+    ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+    out_root = base / "OUTPUT" / f"RESULT_{ts}"
+    out_root.mkdir(parents=True, exist_ok=True)
 
-def save_output(folder: str, filename: str, content: str) -> None:
-    """생성된 콘텐츠를 지정된 폴더와 파일명으로 저장합니다."""
-    path = os.path.join("outputs", folder, filename)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "w", encoding="utf-8") as f:
-        f.write(content)
+    records = []
+    for pdf in collect_pdf_files(input_pdf_dir):
+        doc = extract_text_from_pdf(pdf)
+        classified = classify_document(pdf, doc.full_text)
+        if classified.document_type != "결산보고서":
+            continue
+        records.extend(parse_financial_statements(doc.full_text, classified.year))
 
+    write_records_json_csv(records, out_root)
 
-def main() -> None:
-    """콘텐츠 생성의 메인 진입점."""
-    user_input = read_input()
+    analysis = analyze_template(template_path)
+    autofill_financials(
+        template_path=template_path,
+        output_xlsx_path=out_root / "autofilled.xlsx",
+        records=records,
+        analysis=analysis,
+        unmatched_log_path=out_root / "확인필요_미매칭항목.txt",
+    )
 
-    # 프롬프트 파일 위치
-    blog_prompt_path = os.path.join("prompts", "blog_prompt.txt")
-    youtube_prompt_path = os.path.join("prompts", "youtube_prompt.txt")
-    thumbnail_prompt_path = os.path.join("prompts", "thumbnail_prompt.txt")
-
-    # 콘텐츠 생성
-    blog = generate_content(blog_prompt_path, user_input)
-    youtube = generate_content(youtube_prompt_path, user_input)
-    thumbnail = generate_content(thumbnail_prompt_path, user_input)
-
-    # 생성된 콘텐츠 저장
-    save_output("blog", "blog_post.txt", blog)
-    save_output("youtube", "youtube_script.txt", youtube)
-    save_output("thumbnail", "thumbnail.txt", thumbnail)
-
-    print("✅ 콘텐츠 생성 완료!")
+    validate_excel_errors(out_root / "autofilled.xlsx", out_root / "오류검사결과.txt")
+    print(f"완료: {out_root}")
 
 
 if __name__ == "__main__":
-    main()
+    run()
